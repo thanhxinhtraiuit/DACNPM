@@ -10,28 +10,14 @@ use App\User;
 class prescriptionController extends Controller
 {
     public function index(Request $request){
-        $model = prescription::where([]);
+        $arrayInput = $request->all();
+        $model = new prescription;
+        $results = $model->Search($arrayInput);
 
-        if(isset($request->status) && $request->status){
-            $model = $model->where('status',$request->status);
-        }
-        if(isset($request->name) && $request->name){
-            $model = $model->where('name','LIKE','%'.$request->name.'%');
-        }
-        if(isset($request->id) && $request->id){
-            $model = $model->where('id',$request->id);
-        }
-
-        if(isset($request->data_customer) && $request->data_customer){
-            $model->with('customer');
-        }
-
-
-        $resuals = $model->get();
         $return = [
             'status' => '1',
             'code' => '200',
-            'data' => $resuals
+            'data' => $results
         ];
         return response()->json($return);
 

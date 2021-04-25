@@ -18,6 +18,9 @@ class CreatePrescriptions extends Migration
             $table->string('code');
             $table->tinyInteger('customer_id')->index()->nullable();
             $table->tinyInteger('user_id')->index()->nullable();
+            $table->tinyInteger('symptom_id');
+            $table->tinyInteger('medicine_id');
+            $table->
             $table->tinyInteger('status')->default(1)->comment('1-active; 0-deleted; 2-inactive')->nullable();
             
             $table->timestamps();

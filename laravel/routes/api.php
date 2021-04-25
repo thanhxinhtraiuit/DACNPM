@@ -39,7 +39,7 @@ Route::group([
     });
 });
 
-Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
+Route::group(['prefix' => 'customer'], function()
 {
     Route::post('/', 'customerController@insert');
 });

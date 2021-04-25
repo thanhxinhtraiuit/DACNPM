@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Customer;
 use Carbon\Carbon;
 
-
 class customerController extends Controller
 {
     public function insert(Request $request)
@@ -16,7 +15,7 @@ class customerController extends Controller
             'phone' => 'required|integer',
         ]);
 
-        $code = $this->generateCode();
+        $code = $this->generateCode(12);
         
         $arrayInput = [
             'name' => $request->name,
@@ -40,10 +39,12 @@ class customerController extends Controller
         return response()->json($return);
     }
    
-    public function generateCode()
+    public function generateCode($type)
         {
-            $now = Carbon::now();
-            return $now->day +  $now->month + $now->year + $now->min + $now->second + 9000000000;
+            // $now = Carbon::now();
+            $string_code = $type . Carbon::Create('ymd');
+            dd($string_code);
+            // return $now->day +  $now->month + $now->year + $now->min + $now->second + 9000000000;
         }
     
         public function update(Request $request, $id)
