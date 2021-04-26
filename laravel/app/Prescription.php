@@ -5,8 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Customer;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 class Prescription extends Model
-
 {
     protected $table = 'prescriptions';
 
@@ -14,9 +14,12 @@ class Prescription extends Model
 
     protected $fillable = [
         'code',
-        'name',
         'status',
         'customer_id',
+        'user_id',
+        'date',
+        'symptoms',
+        'diseases',
         'created_at',
         'updated_at'
     ];
@@ -25,12 +28,11 @@ class Prescription extends Model
     {
         return $this->hasOne(Customer::class,'id','customer_id');
     }
+
     public function Search(array $request){
 
         $model = $this;
 
-        $abc = $this->generateCode();
-        dd($abc);
         if(isset($request['status']) && $request['status']){
             $model = $model->where('status',$request['status']);
         }
@@ -62,71 +64,59 @@ class Prescription extends Model
         return $results;
     }
 
-    public function insert(Array $request)
+    public function createv2(Array $request)
     {
 
-        $code = $this->generateCode;
+        $code = $this->generateCode();
+
+        $user_id = Auth::user()->id;
+
         $arrayInput = [
-            'customer_id' => $request->customer_id,
+            'customer_id' => $request['customer_id'],
             'code' => $code,
             'status' => '1',
-        ];
-        $results = prescription::create($arrayInput);
-        $return = [
-            'status' => '1',
-            'code' => '200',
-            'data' => $results
+            'user_id'=> $user_id
         ];
 
-        return response()->json($return);
+        
+        $results = prescription::create($arrayInput);
+
+        return $results;
 
     }
 
-    public function detail(Request $request, $id)
+    public function detail( $id)
     {
         
         $prescription = prescription::where('id', $id)->first();
 
-        $return = [
-            'status' => '1',
-            'code' => '200',
-            'data' => $prescription
-        ];
-        return response()->json($return);
+        return $prescription;
     }
 
-    public function delete(Request $request, $id)
+    public function deletev2($id)
     {
         
         $prescription = prescription::where('id', $id)->first();
         $prescription->update(['status'=>'2']);
-        $return = [
-            'status' => '1',
-            'code' => '200',
-            'data' => $prescription
-        ];
-        return response()->json($return);
+
+        return $prescription;
     }
-    public function update(Request $request, $id)
+    public function updatev2(Array $request, $id)
     {
-        $request->validate([
-            'name'=>'string',
-            'customer_id'=>'integer',
-        ]);
-        $arrayInput = [
-            'name' => $request->name,
-            'customer_id' => $request->customer_id,
-            'status' =>  $request->status,
-        ];
+
+        $arrayInput = [];
+        if(isset($request['status']) && $request['status']){
+            $arrayInput['status'] =$request['status'];
+        }
+
+        if(isset($request['name']) && $request['name']){
+            $arrayInput['name'] =$request['name'];
+        }
+
         $prescription = prescription::where('id', $id)->first();
         $results =$prescription->update($arrayInput);
-        $return = [
-            'status' => '1',
-            'code' => '200',
-            'data' => $results
-        ];
         
-        return response()->json($return);
+        return $results;
     }
 
     public function generateCode()

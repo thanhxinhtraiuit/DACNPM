@@ -15,12 +15,12 @@ class CreatePrescriptions extends Migration
     {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code');
+            $table->string('code')->index();
             $table->tinyInteger('customer_id')->index()->nullable();
             $table->tinyInteger('user_id')->index()->nullable();
-            $table->tinyInteger('symptom_id');
-            $table->tinyInteger('medicine_id');
-            $table->
+            $table->tinyInteger('date')->nullable();
+            $table->string('symptoms')->nullable();
+            $table->string('diseases')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1-active; 0-deleted; 2-inactive')->nullable();
             
             $table->timestamps();

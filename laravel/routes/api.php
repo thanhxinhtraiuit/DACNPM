@@ -17,9 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('prescription')->group(function () {
+Route::group(['middleware' => 'auth:api','prefix'=>'prescription'], function () {
     Route::get('/','prescriptionController@index');
-    Route::post('/','prescriptionController@insert');
+    Route::post('/','prescriptionController@create');
     Route::get('/{id}','prescriptionController@detail');
     Route::put('/{id}','prescriptionController@update');
     Route::delete('/{id}','prescriptionController@delete');
