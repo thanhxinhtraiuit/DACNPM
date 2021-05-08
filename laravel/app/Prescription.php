@@ -29,6 +29,11 @@ class Prescription extends Model
         return $this->hasOne(Customer::class,'id','customer_id');
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
+
     public function Search(array $request){
 
         $model = $this;
