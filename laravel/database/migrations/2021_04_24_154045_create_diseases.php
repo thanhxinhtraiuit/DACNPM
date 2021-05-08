@@ -17,6 +17,7 @@ class CreateDiseases extends Migration
             $table->bigIncrements('id');
             $table->string('code')->index();
             $table->string('disease_name');
+            $table->tinyInteger('status')->default(1)->comment('1-active; 0-deleted; 2-inactive');
             $table->timestamps();
         });
     }

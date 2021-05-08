@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSymptoms extends Migration
+class CreateVariables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateSymptoms extends Migration
      */
     public function up()
     {
-        Schema::create('symptoms', function (Blueprint $table) {
+        Schema::create('variable', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code');
-            $table->string('disease_code')->index();
-            $table->string('symptom_code')->index();
+            $table->string('key');
+            $table->tinyInteger('value');
             $table->tinyInteger('status')->default(1)->comment('1-active; 0-deleted; 2-inactive');
 
             $table->timestamps();
@@ -31,6 +30,6 @@ class CreateSymptoms extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('symptoms');
+        Schema::dropIfExists('variables');
     }
 }

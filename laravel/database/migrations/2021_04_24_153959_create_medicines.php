@@ -18,6 +18,7 @@ class CreateMedicines extends Migration
             $table->string('code')->index();
             $table->tinyInteger('amount_inventory')->index();
             $table->string('unit');
+            $table->tinyInteger('status')->default(1)->comment('1-active; 0-deleted; 2-inactive');
             $table->bigInteger('cost_per_med')->index();
             
             $table->timestamps();

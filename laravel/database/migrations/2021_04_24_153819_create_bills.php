@@ -18,6 +18,7 @@ class CreateBills extends Migration
             $table->string('code')->index();
             $table->string('PD_code')->index();
             $table->bigInteger('total_price');
+            $table->tinyInteger('status')->default(1)->comment('1-active; 0-deleted; 2-inactive');
             $table->bigInteger('analysis_price')->index();
             
             $table->timestamps();

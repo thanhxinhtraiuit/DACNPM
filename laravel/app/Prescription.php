@@ -37,10 +37,6 @@ class Prescription extends Model
             $model = $model->where('status',$request['status']);
         }
 
-        if(isset($request['name']) && $request['name']){
-            $model = $model->where('name','LIKE','%'.$request['name'].'%');
-        }
-
         if(isset($request['id']) && $request['id']){
             $model = $model->where('id',$request['id']);
         }
@@ -111,6 +107,22 @@ class Prescription extends Model
 
         if(isset($request['name']) && $request['name']){
             $arrayInput['name'] =$request['name'];
+        }
+
+        if(isset($request['sex']) && $request['sex']){
+            $arrayInput['sex'] =$request['sex'];
+        }
+
+        if(isset($request['birth']) && $request['birth']){
+            $arrayInput['birth'] =$request['birth'];
+        }
+
+        if(isset($request['address']) && $request['address']){
+            $arrayInput['address'] =$request['address'];
+        }
+
+        if(isset($request['phone']) && $request['phone']){
+            $arrayInput['phone'] =$request['phone'];
         }
 
         $prescription = prescription::where('id', $id)->first();

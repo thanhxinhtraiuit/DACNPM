@@ -18,6 +18,7 @@ class CreateMedicinesInventory extends Migration
             $table->string('medicine_id')->index();
             $table->tinyInteger('amount')->index();
             $table->tinyInteger('type')->default(1)->comment('1-this_month; 2-last_month')->nullable(); 
+            $table->tinyInteger('status')->default(1)->comment('1-active; 0-deleted; 2-inactive');
 
             $table->timestamps();
         });

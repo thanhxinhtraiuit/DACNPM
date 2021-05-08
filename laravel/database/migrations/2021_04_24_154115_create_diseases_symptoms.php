@@ -17,6 +17,7 @@ class CreateDiseasesSymptoms extends Migration
             $table->bigIncrements('id');
             $table->string('code')->index();
             $table->string('symptom_name')->index();
+            $table->tinyInteger('status')->default(1)->comment('1-active; 0-deleted; 2-inactive');
 
             $table->timestamps();
         });
