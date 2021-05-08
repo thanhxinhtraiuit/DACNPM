@@ -25,6 +25,22 @@ Route::group(['middleware' => 'auth:api','prefix'=>'prescription'], function () 
     Route::delete('/{id}','prescriptionController@delete');
 });
 
+Route::group(['middleware' => 'auth:api','prefix'=>'customer'], function () {
+    Route::get('/','customerController@index');
+    Route::post('/','customerController@create');
+    Route::get('/{id}','customerController@detail');
+    Route::put('/{id}','customerController@update');
+    Route::delete('/{id}','customerController@delete');
+});
+
+Route::group(['middleware' => 'auth:api','prefix'=>'prescriptions_detail'], function () {
+    Route::get('/','prescriptions_detailController@index');
+    Route::post('/','prescriptions_detailController@create');
+    Route::get('/{id}','prescriptions_detailController@detail');
+    Route::put('/{id}','prescriptions_detailController@update');
+    Route::delete('/{id}','prescriptions_detailController@delete'); 
+});
+
 Route::group([
     'prefix' => 'auth'
 ], function () {
@@ -37,9 +53,4 @@ Route::group([
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
     });
-});
-
-Route::group(['prefix' => 'customer'], function()
-{
-    Route::post('/', 'customerController@insert');
 });
